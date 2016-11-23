@@ -82,16 +82,49 @@ def update(table, id_):
 # return type: string (id)
 # if there are more than one with the lowest price, return the first of descending alphabetical order
 def get_lowest_price_item_id(table):
+    min = table[0][2]
+    my_list = []
+    counter = 0
+    for row in range(len(table)):
+        if table[row][2] < min:
+            min = table[row][2]
+            my_list.append(table[row])
+    n = len(my_list)
+    while n > 1:
+        n -= 1
+        for row in range(len(my_list) - 1):
+            if my_list[row][1].lower() > my_list[row + 1][1].lower():
+                my_list[row], my_list[row + 1] = my_list[row + 1], my_list[row]
 
-    # your code
-
-    pass
+    return my_list[0][0]
 
 
 # the question: Which items are sold between two given dates ? (from_date < birth_date < to_date)
 # return type: list of lists (the filtered table)
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
-
-    # your code
-
-    pass
+    my_list = []
+    if len(str(month_from)) != 2:
+        month_from = "0" + str(month_from)
+    if len(str(month_to)) != 2:
+        month_to = "0" + str(month_to)
+    if len(str(day_from)) != 2:
+        day_from = "0" + str(day_from)
+    if len(str(day_to)) != 2:
+        day_to = "0" + str(day_to)
+    from_data = str(year_from) + str(month_from) + str(day_from)
+    to_data = str(year_to) + str(month_to) + str(day_to)
+    for row in range(len(table)):
+        if len(table[row][3]) != 2:
+            table[row][3] = "0" + str(table[row][3])
+        if len(table[row][4]) != 2:
+            table[row][4] = "0" + str(table[row][4])
+    for row in range(len(table)):
+        date = table[row][5] + table[row][3] + table[row][4]
+        if date > from_data and date < to_data:
+            my_list.append(table[row])
+    for row in range(len(my_list)):
+        my_list[row][5] = int(my_list[row][5])
+        my_list[row][3] = int(my_list[row][3])
+        my_list[row][4] = int(my_list[row][4])
+        my_list[row][2] = int(my_list[row][2])
+    return my_list
