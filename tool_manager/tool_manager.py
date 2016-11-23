@@ -81,10 +81,14 @@ def update(table, id_):
 #
 # @table: list of lists
 def get_available_tools(table):
-
-    # your code
-
-    pass
+    update_table = []
+    for row in range(len(table)):
+        result = int(table[row][3]) + int(table[row][4])
+        if result > 2016:
+            table[row][3] = int(table[row][3])
+            table[row][4] = int(table[row][4])
+            update_table.append(table[row])
+    return update_table
 
 
 # the question: What are the average durability time for each manufacturer?
@@ -92,7 +96,15 @@ def get_available_tools(table):
 #
 # @table: list of lists
 def get_average_durability_by_manufacturers(table):
-
-    # your code
-
-    pass
+    my_dict = {}
+    for row in range(len(table)):
+        sum = 0
+        result = 0
+        counter = 0
+        for manufacturer in range(len(table)):
+            if table[row][2] == table[manufacturer][2]:
+                sum += int(table[manufacturer][4])
+                counter += 1
+        result = sum / counter
+        my_dict.update({table[row][2]: result})
+    return my_dict

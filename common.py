@@ -14,6 +14,4 @@ def generate_random(table):
 
     generated = ''
 
-    # your code
-
     return generated
