@@ -44,9 +44,13 @@ def start_module():
         elif option == "2":
             add(table)
         elif option == "3":
+            id_ = ui.get_inputs(["Please enter an id to remove: "], "")
             remove(table, id_)
+            data_manager.write_table_to_file("selling/sellings.csv", table)
         elif option == "4":
+            id_ = ui.get_inputs(["Please enter an id to update: "], "")
             update(table, id_)
+            data_manager.write_table_to_file("selling/sellings.csv", table)
         elif option == "5":
             get_lowest_price_item_id(table)
         elif option == "6":
@@ -63,7 +67,7 @@ def start_module():
 # @table: list of lists
 def show_table(table):
 
-    title_list = ["id", "title", "price", "day", "month", "year"]
+    title_list = ["title", "price", "month", "day", "year"]
     ui.print_table(table, title_list)
     start_module()
 
@@ -73,7 +77,14 @@ def show_table(table):
 # @table: list of lists
 def add(table):
 
-    # your code
+    id = common.generate_random(table)
+    list_labels = ["title", "price", "month", "day", "year"]
+    title = "Add item to list"
+    inputs = []
+    inputs = ui.get_inputs(list_labels, title)
+    inputs.insert(0, id)
+    table.append(inputs)
+    data_manager.write_table_to_file("selling/sellings.csv", table)
 
     return table
 
@@ -84,7 +95,11 @@ def add(table):
 # @id_: string
 def remove(table, id_):
 
-    # your code
+    user_id = str(id_[0])
+    for row in table:
+        original_id = row[0]
+        if original_id == user_id:
+            table.remove(row)
 
     return table
 
@@ -96,7 +111,14 @@ def remove(table, id_):
 # @id_: string
 def update(table, id_):
 
-    # your code
+    list_labels = ["title", "price", "month", "day", "year"]
+    user_id = str(id_[0])
+    for row in range(len(table)):
+        original_id = table[row][0]
+        if original_id == user_id:
+            new_data = ui.get_inputs(list_labels,"Update data")
+            new_data.insert(0, user_id)
+            table[row]= new_data
 
     return table
 
