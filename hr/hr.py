@@ -32,13 +32,14 @@ def start_module():
                    "Who is the oldest person?",
                    "Who is the closest to the average age?"]
 
-        ui.print_menu("Accounting menu", options, "Back")
+        ui.print_menu("Human Resources", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
             show_table(table)
         elif option == "2":
             add(table)
+            data_manager.write_table_to_file("accounting/items.csv", table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an id to remove: "], "")
             remove(table, id_)
@@ -48,9 +49,13 @@ def start_module():
             update(table, id_)
             data_manager.write_table_to_file("hr/persons.csv", table)
         elif option == "5":
-            get_oldest_person(table)
+            label = "The oldest person is:"
+            result = get_oldest_person(table)
+            ui.print_result(result,label)
         elif option == "6":
-            get_persons_closest_to_average(table)
+            label = "Person closest to average age:"
+            result =  get_persons_closest_to_average(table)
+            ui.print_result(result,label)
         elif option == "0":
             break
         else:
@@ -80,8 +85,7 @@ def add(table):
     inputs = ui.get_inputs(list_labels, title)
     inputs.insert(0, id)
     table.append(inputs)
-    data_manager.write_table_to_file("hr/persons.csv", table)
-
+    
     return table
 
 
@@ -130,10 +134,10 @@ def get_oldest_person(table):
         born_year = row[2]
         if int(born_year) < min_year:
             min_year = int(born_year)
-    for row in range(len(table)):
+    for row in table:
+        born_year = row[2]
         if int(born_year) == min_year:
-            oldest_persons.append(table[row][1])
-
+            oldest_persons.append(row[1])
     return oldest_persons
 
 

@@ -43,6 +43,7 @@ def start_module():
             show_table(table)
         elif option == "2":
             add(table)
+            data_manager.write_table_to_file("accounting/items.csv", table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an id to remove: "], "")
             remove(table, id_)
@@ -56,7 +57,10 @@ def start_module():
             label = "The highest profit was this year:"
             ui.print_result(result, label)
         elif option == "6":
-            avg_amount(table, year)
+            label = "This was the average (per item) profit\'s year:"
+            year = ui.get_inputs(["Please enter a year: "], "")
+            result = avg_amount(table, year[0])
+            ui.print_result(result, label)
         elif option == "0":
             break
         else:
@@ -87,7 +91,6 @@ def add(table):
     inputs = ui.get_inputs(list_labels, title)
     inputs.insert(0, id)
     table.append(inputs)
-    data_manager.write_table_to_file("accounting/items.csv", table)
 
     return table
 
@@ -153,7 +156,7 @@ def which_year_max(table):
 
 
 def avg_amount(table, year):
-    given_year = year
+    given_year = int(year)
     sum = 0
     counter = 0
     for row in table:

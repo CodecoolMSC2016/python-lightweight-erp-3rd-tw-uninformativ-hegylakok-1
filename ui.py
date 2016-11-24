@@ -83,7 +83,7 @@ def print_menu(title, list_options, exit_message):
 
     print("\n" + title + "\n")
     counter = 0
-    for i in list_options: #én raktam ide
+    for i in list_options: 
         counter += 1
         print("(" + str(counter) + ") " + i)
     print("(0) " + exit_message)

@@ -33,13 +33,14 @@ def start_module():
                    "What is the id of the customer with the longest name?",
                    "Which customers has subscribed to the newsletter?"]
 
-        ui.print_menu("Accounting menu", options, "Back")
+        ui.print_menu("Customer Relationship Management", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
             show_table(table)
         elif option == "2":
             add(table)
+            data_manager.write_table_to_file("accounting/items.csv", table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an id to remove: "], "")
             remove(table, id_)
@@ -49,9 +50,13 @@ def start_module():
             update(table, id_)
             data_manager.write_table_to_file("crm/customers.csv", table)
         elif option == "5":
-            get_longest_name_id(table)
+            label = "The id of the customer is:"
+            result = get_longest_name_id(table)
+            ui.print_result(result, label)
         elif option == "6":
-            get_subscribed_emails(table)
+            label = "Newsletter subscribers:"
+            result = get_subscribed_emails(table)
+            ui.print_result(result, label)
         elif option == "0":
             break
         else:
@@ -81,8 +86,7 @@ def add(table):
     inputs = ui.get_inputs(list_labels, title)
     inputs.insert(0, id)
     table.append(inputs)
-    data_manager.write_table_to_file("crm/customers.csv", table)
-
+    
     return table
 
 

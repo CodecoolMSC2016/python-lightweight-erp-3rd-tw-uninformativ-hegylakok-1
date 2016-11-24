@@ -34,13 +34,14 @@ def start_module():
                    "Which items has not yet exceeded their durability?",
                    "What are the average durability time for each manufacturer?"]
 
-        ui.print_menu("Accounting menu", options, "Back")
+        ui.print_menu("Tool Manager", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
             show_table(table)
         elif option == "2":
             add(table)
+            data_manager.write_table_to_file("accounting/items.csv", table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an id to remove: "], "")
             remove(table, id_)
@@ -50,9 +51,13 @@ def start_module():
             update(table, id_)
             data_manager.write_table_to_file("tool_manager/tools.csv", table)
         elif option == "5":
-            get_available_tools(table)
+            label = "Items has not yet exceeded their durability: "
+            result = get_available_tools(table)
+            ui.print_result(result, label)
         elif option == "6":
-            get_average_durability_by_manufacturers(table)
+            label = "The average durability time for each manufacturer: "
+            result = get_average_durability_by_manufacturers(table)
+            ui.print_result(result, label)
         elif option == "0":
             break
         else:
@@ -82,8 +87,7 @@ def add(table):
     inputs = ui.get_inputs(list_labels, title)
     inputs.insert(0, id)
     table.append(inputs)
-    data_manager.write_table_to_file("tool_manager/tools.csv", table)
-
+    
     return table
 
 

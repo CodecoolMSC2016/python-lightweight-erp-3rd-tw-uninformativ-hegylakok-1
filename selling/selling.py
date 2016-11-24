@@ -36,13 +36,14 @@ def start_module():
                    "What is the id of the item that sold for the lowest price?",
                    "Which items are sold between two given dates?"]
 
-        ui.print_menu("Accounting menu", options, "Back")
+        ui.print_menu("Sellings", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
             show_table(table)
         elif option == "2":
             add(table)
+            data_manager.write_table_to_file("accounting/items.csv", table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an id to remove: "], "")
             remove(table, id_)
@@ -52,9 +53,15 @@ def start_module():
             update(table, id_)
             data_manager.write_table_to_file("selling/sellings.csv", table)
         elif option == "5":
-            get_lowest_price_item_id(table)
+            label = "Id of the lowest sold item: "
+            result = get_lowest_price_item_id(table)
+            ui.print_result(result, label)
         elif option == "6":
-            get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+            label = "Items are sold between two given dates: "
+            list_labels = ["month from","day from","year from","month to","day to","year to"]
+            input = ui.get_inputs(list_labels, "")
+            result = get_items_sold_between(table, input[0], input[1], input[2], input[3], input[4], input[5])
+            ui.print_result(result, label)
         elif option == "0":
             break
         else:
@@ -84,8 +91,7 @@ def add(table):
     inputs = ui.get_inputs(list_labels, title)
     inputs.insert(0, id)
     table.append(inputs)
-    data_manager.write_table_to_file("selling/sellings.csv", table)
-
+    
     return table
 
 
@@ -180,6 +186,6 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
         row[5] = int(row[5])
         row[4] = int(row[3])
         row[3] = int(row[4])
-        row[2] = int([2])
+        row[2] = int(row[2])
 
     return filtered_table
