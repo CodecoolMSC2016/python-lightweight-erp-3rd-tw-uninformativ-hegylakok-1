@@ -77,16 +77,43 @@ def update(table, id_):
 # the question: Who is the oldest person ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_oldest_person(table):
+    min = 2016
+    my_list = []
+    min_age = 0
+    for row in range(len(table)):
+        if int(table[row][2]) < min:
+            min = int(table[row][2])
+    for row in range(len(table)):
+        if int(table[row][2]) == min:
+            my_list.append(table[row][1])
 
-    # your code
-
-    pass
+    return my_list
 
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
+    checker = 0
+    sum = 0
+    my_list = []
+    for row in range(len(table)):
+        sum += 2016 - int(table[row][2])
+        checker += 1
+    average_age = sum / checker
+    min = 100
+    my_list = []
+    for row in range(len(table)):
+        result = (2016 - int(table[row][2])) - average_age
+        if result < 0:
+            result = result * -1
+        if result < min:
+            min = result
+    for row in range(len(table)):
+        result = (2016 - int(table[row][2])) - average_age
+        if result < 0:
+            result = result * -1
+        if result == min:
+            if table[row] not in my_list:
+                my_list.append(table[row][1])
 
-    # your code
-
-    pass
+    return my_list
