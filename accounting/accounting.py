@@ -52,7 +52,9 @@ def start_module():
             update(table, id_)
             data_manager.write_table_to_file("accounting/items.csv", table)
         elif option == "5":
-            which_year_max(table)
+            result = which_year_max(table)
+            label = "The highest profit was this year:"
+            ui.print_result(result, label)
         elif option == "6":
             avg_amount(table, year)
         elif option == "0":

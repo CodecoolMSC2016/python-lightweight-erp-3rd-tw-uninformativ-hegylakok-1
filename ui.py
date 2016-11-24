@@ -50,9 +50,20 @@ def print_table(table, title_list):
 # @label: string - label of the result
 def print_result(result, label):
 
-    # your code
+   print()
+   print(label, "\n")
+   if type(result) == list:
+       for row in result:
+           print(row, "\n")
+       print()
+   elif type(result) == dict:
+       for key, value in result.items():
+           print(key, ":", value)
+       print()
 
-    pass
+   else:
+       print(result, "\n")
+
 
 
 # This function needs to generate outputs like this:
