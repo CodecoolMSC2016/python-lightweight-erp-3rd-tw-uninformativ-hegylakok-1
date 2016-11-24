@@ -103,6 +103,8 @@ def get_inputs(list_labels, title):
         label = label + " : "
         usr_in = input(label)
         inputs.append(usr_in)
+    
+
 
     return inputs
 
@@ -111,7 +113,5 @@ def get_inputs(list_labels, title):
 #
 # @message: string - the error message
 def print_error_message(message):
-
-    # your code
-
-    pass
+    print("@%s"%message)
+    
