@@ -22,10 +22,36 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
+    table = data_manager.get_table_from_file("hr/persons.csv")
 
-    # you code
+    while True:
+        options = ["Print the default table of records",
+                "Add an item to the table",
+                "Remove from table",
+                "Update an item in the table",
+                "Who is the oldest person?",
+                "Who is the closest to the average age?"]
 
-    pass
+        ui.print_menu("Accounting menu", options, "Back")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+        elif option == "3":
+            remove(table, id_)
+        elif option == "4":
+            update(table, id_)
+        elif option == "5":
+            get_oldest_person(table)
+        elif option == "6":
+            get_persons_closest_to_average(table)
+        elif option == "0":
+            break
+        else:
+            raise KeyError("There is no such option.")
+        return
 
 
 # print the default table of records from the file
@@ -33,9 +59,9 @@ def start_module():
 # @table: list of lists
 def show_table(table):
 
-    # your code
-
-    pass
+    title_list = ["id", "name", "birthdate"]
+    ui.print_table(table, title_list)
+    start_module()
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table

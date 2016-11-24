@@ -13,9 +13,35 @@
 # @title_list: list of strings - the head of the table
 def print_table(table, title_list):
 
-    # your code
-
-    pass
+    # címsor oszlopainak szélessége
+    len_title = []
+    for item in title_list:
+        len_title.append(len(item))
+    # az oszlopszélességek meghatározása
+    max_lenght_in_table = [max(len(str(item)) for item in line) for line in zip(*table)]
+    i = 0
+    for i in range(0, len(max_lenght_in_table)):
+        if max_lenght_in_table[i] < len_title[i]:
+            max_lenght_in_table[i] = len_title[i]
+    # tábla szélességének meghatározása
+    table_lenght = 0
+    for item in max_lenght_in_table:
+        table_lenght += int(item)
+    table_lenght = table_lenght + int(len(title_list))*2
+    # tábla rajzolása
+    print("/", "-"*table_lenght, chr(92))
+    for index in range(0, len(title_list)):
+        print("|" + title_list[index].center(max_lenght_in_table[index]+2), end = "")
+    print("|")
+    for line in table:
+        for index in range(0, len(title_list)):
+            print("|" +  "-"*(max_lenght_in_table[index]+2), end = "")
+        print("|")
+        for index in range(0, len(title_list)):
+            print("|" + line[index].center(max_lenght_in_table[index]+2), end = "")
+        print("|")
+    print(chr(92), "-"*table_lenght, "/")
+    print("\n")
 
 
 # This function needs to print result of the special functions
@@ -44,9 +70,13 @@ def print_result(result, label):
 # @exit_message: string - the last option with (0) (example: "Back to main menu")
 def print_menu(title, list_options, exit_message):
 
-    # your code
-
-    pass
+    print("\n" + title + "\n")
+    counter = 0
+    for i in list_options: #én raktam ide
+        counter += 1
+        print("(" + str(counter) + ") " + i)
+    print("(0) " + exit_message)
+    
 
 
 # This function gets a list of inputs from the user by the terminal
@@ -55,9 +85,13 @@ def print_menu(title, list_options, exit_message):
 # @title: string - title of the "input section"
 # @inputs: list of string - list of the received values from the user
 def get_inputs(list_labels, title):
+    
     inputs = []
-
-    # your code
+    print(title)
+    for label in list_labels:
+        label = label + " : "
+        usr_in = input(label)
+        inputs.append(usr_in)
 
     return inputs
 
