@@ -67,7 +67,7 @@ def start_module():
 # @table: list of lists
 def show_table(table):
 
-    title_list = ["title", "price", "month", "day", "year"]
+    title_list = ["id", "title", "price", "month", "day", "year"]
     ui.print_table(table, title_list)
     start_module()
 
