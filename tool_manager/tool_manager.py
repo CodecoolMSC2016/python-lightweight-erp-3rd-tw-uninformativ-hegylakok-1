@@ -109,7 +109,7 @@ def remove(table, id_):
 # @id_: string
 def update(table, id_):
 
-   list_labels = ["name", "manufacturer", "purchase date", "durability"]
+    list_labels = ["name", "manufacturer", "purchase date", "durability"]
     user_id = str(id_[0])
     for row in range(len(table)):
         original_id = table[row][0]
