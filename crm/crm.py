@@ -27,11 +27,11 @@ def start_module():
 
     while True:
         options = ["Print the default table of records",
-                "Add an item to the table",
-                "Remove from table",
-                "Update an item in the table",
-                "What is the id of the customer with the longest name?",
-                "Which customers has subscribed to the newsletter?"]
+                   "Add an item to the table",
+                   "Remove from table",
+                   "Update an item in the table",
+                   "What is the id of the customer with the longest name?",
+                   "Which customers has subscribed to the newsletter?"]
 
         ui.print_menu("Accounting menu", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -106,21 +106,23 @@ def update(table, id_):
 # return type: string (id) - if there are more than one longest name, return the first of descending alphabetical order
 def get_longest_name_id(table):
 
-    max = 0
-    my_list = []
-    for row in range(len(table)):
-        if len(table[row][1]) > max:
-            max = len(table[row][1])
-    for row in range(len(table)):
-        if len(table[row][1]) == max:
-            my_list.append(table[row])
-        n = len(my_list)
-        while n > 1:
-            n -= 1
-            for row in range(len(my_list) - 1):
-                if my_list[row][1].lower() > my_list[row + 1][1].lower():
-                    my_list[row], my_list[row + 1] = my_list[row + 1], my_list[row]
-    return my_list[0][0]
+    longest_name = 0
+    sorted_list = []
+    for row in table:
+        name = row[1]
+        if len(name) > longest_name:
+            longest_name = len(name)
+    for row in table:
+        name = row[1]
+        if len(name) == longest_name:
+            sorted_list.append(row)
+        lenght_of_list = len(sorted_list)
+        while lenght_of_list > 1:
+            lenght_of_list -= 1
+            for row in range(len(sorted_list) - 1):
+                if sorted_list[row][1].lower() > sorted_list[row + 1][1].lower():
+                    sorted_list[row], sorted_list[row + 1] = sorted_list[row + 1], sorted_list[row]
+    return sorted_list[0][0]
 
 
 # the question: Which customers has subscribed to the newsletter?
@@ -129,9 +131,12 @@ def get_longest_name_id(table):
 
 def get_subscribed_emails(table):
 
-    my_list = []
-    for row in range(len(table)):
-        if table[row][3] == "1":
-            string = "%s;%s" % (table[row][2], table[row][1])
-            my_list.append(string)
-    return my_list
+    subscribers = []
+    for row in table:
+        email = row[2]
+        name = row[1]
+        subscribed = row[3]
+        if subscribed == "1":
+            string = "%s;%s" % (email, name)
+            subscribers.append(string)
+    return subscribers

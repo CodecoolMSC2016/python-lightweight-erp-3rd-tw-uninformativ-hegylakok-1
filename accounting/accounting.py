@@ -25,16 +25,16 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
-   
+
     table = data_manager.get_table_from_file("accounting/items.csv")
 
     while True:
         options = ["Print the default table of records",
-                "Add an item to the table",
-                "Remove from table",
-                "Update an item in the table",
-                "Which year has the highest profit?",
-                "What is the average (per item) profit in a given year?"]
+                   "Add an item to the table",
+                   "Remove from table",
+                   "Update an item in the table",
+                   "Which year has the highest profit?",
+                   "What is the average (per item) profit in a given year?"]
 
         ui.print_menu("Accounting menu", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -62,10 +62,10 @@ def start_module():
 #
 # @table: list of lists
 def show_table(table):
-    
+
     title_list = ["id", "month", "day", "year", "type", "amount"]
     ui.print_table(table, title_list)
-    start_module()# Azért kell, hogy ne a Main menübe ugorjon vissza egyből, hanem itt mardjon!!
+    start_module()  # Azért kell, hogy ne a Main menübe ugorjon vissza egyből, hanem itt mardjon!!
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
@@ -107,16 +107,41 @@ def update(table, id_):
 # the question: Which year has the highest profit? (profit=in-out)
 # return the answer (number)
 def which_year_max(table):
-
-    # your code
-
-    pass
-
+    results = {}
+    max = 0
+    max_year = 0
+    for row in table:
+        row_type = row[4]
+        year = int(row[3])
+        value = int(row[5])
+        if row_type == "out":
+            value *= -1
+        if year in results.keys():
+            results[year] += value
+        else:
+            results[year] = value
+    for year, value in results.items():
+        if value > max:
+            max = value
+            max_year = year
+    return max_year
 
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
 # return the answer (number)
+
+
 def avg_amount(table, year):
-
-    # your code
-
-    pass
+    given_year = year
+    sum = 0
+    counter = 0
+    for row in table:
+        row_type = row[4]
+        value = int(row[5])
+        year = int(row[3])
+        if year == given_year:
+            if row_type == "out":
+                sum -= value
+            else:
+                sum += value
+            counter += 1
+    return sum / counter

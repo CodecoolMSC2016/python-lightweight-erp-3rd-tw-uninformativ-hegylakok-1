@@ -28,11 +28,11 @@ def start_module():
 
     while True:
         options = ["Print the default table of records",
-                "Add an item to the table",
-                "Remove from table",
-                "Update an item in the table",
-                "Which items has not yet exceeded their durability?",
-                "What are the average durability time for each manufacturer?"]
+                   "Add an item to the table",
+                   "Remove from table",
+                   "Update an item in the table",
+                   "Which items has not yet exceeded their durability?",
+                   "What are the average durability time for each manufacturer?"]
 
         ui.print_menu("Accounting menu", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -108,12 +108,14 @@ def update(table, id_):
 # @table: list of lists
 def get_available_tools(table):
     update_table = []
-    for row in range(len(table)):
-        result = int(table[row][3]) + int(table[row][4])
+    for row in table:
+        purchase_date = int(row[3])
+        durability = int(row[4])
+        result = purchase_date + durability
         if result > 2016:
-            table[row][3] = int(table[row][3])
-            table[row][4] = int(table[row][4])
-            update_table.append(table[row])
+            row[3] = int(row[3])
+            row[4] = int(row[4])
+            update_table.append(row)
     return update_table
 
 
@@ -123,14 +125,17 @@ def get_available_tools(table):
 # @table: list of lists
 def get_average_durability_by_manufacturers(table):
     my_dict = {}
-    for row in range(len(table)):
-        sum = 0
+    for row in table:
+        sum_of_durability = 0
         result = 0
         counter = 0
-        for manufacturer in range(len(table)):
-            if table[row][2] == table[manufacturer][2]:
-                sum += int(table[manufacturer][4])
+        manufacture = row[2]
+        for row in table:
+            manufacture_2 = row[2]
+            durability = int(row[4])
+            if manufacture == manufacture_2:
+                sum_of_durability += durability
                 counter += 1
-        result = sum / counter
-        my_dict.update({table[row][2]: result})
+        average = sum_of_durability / counter
+        my_dict.update({manufacture: average})
     return my_dict

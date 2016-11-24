@@ -26,11 +26,11 @@ def start_module():
 
     while True:
         options = ["Print the default table of records",
-                "Add an item to the table",
-                "Remove from table",
-                "Update an item in the table",
-                "Who is the oldest person?",
-                "Who is the closest to the average age?"]
+                   "Add an item to the table",
+                   "Remove from table",
+                   "Update an item in the table",
+                   "Who is the oldest person?",
+                   "Who is the closest to the average age?"]
 
         ui.print_menu("Accounting menu", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -103,43 +103,47 @@ def update(table, id_):
 # the question: Who is the oldest person ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_oldest_person(table):
-    min = 2016
-    my_list = []
-    min_age = 0
+    min_year = 2016
+    oldest_persons = []
+    for row in table:
+        born_year = row[2]
+        if int(born_year) < min_year:
+            min_year = int(born_year)
     for row in range(len(table)):
-        if int(table[row][2]) < min:
-            min = int(table[row][2])
-    for row in range(len(table)):
-        if int(table[row][2]) == min:
-            my_list.append(table[row][1])
+        if int(born_year) == min_year:
+            oldest_persons.append(table[row][1])
 
-    return my_list
+    return oldest_persons
 
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
     checker = 0
-    sum = 0
-    my_list = []
-    for row in range(len(table)):
-        sum += 2016 - int(table[row][2])
+    sum_of_ages = 0
+    current_year = 2016
+    for row in table:
+        born_year = int(row[2])
+        sum_of_ages += current_year - born_year
         checker += 1
-    average_age = sum / checker
-    min = 100
-    my_list = []
-    for row in range(len(table)):
-        result = (2016 - int(table[row][2])) - average_age
+    average_age = sum_of_ages / checker
+    min_age = 100
+    list_of_names = []
+    for row in table:
+        born_year = int(row[2])
+        result = (current_year - born_year) - average_age
         if result < 0:
-            result = result * -1
-        if result < min:
-            min = result
-    for row in range(len(table)):
-        result = (2016 - int(table[row][2])) - average_age
+            result *= -1
+        if result < min_age:
+            min_age = result
+    for row in table:
+        born_year = int(row[2])
+        name = row[1]
+        result = (current_year - born_year) - average_age
         if result < 0:
-            result = result * -1
-        if result == min:
-            if table[row] not in my_list:
-                my_list.append(table[row][1])
+            result *= -1
+        if result == min_age:
+            if row not in list_of_names:
+                list_of_names.append(name)
 
-    return my_list
+    return list_of_names

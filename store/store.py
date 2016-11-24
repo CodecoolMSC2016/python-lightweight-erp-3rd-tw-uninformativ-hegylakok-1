@@ -28,11 +28,11 @@ def start_module():
 
     while True:
         options = ["Print the default table of records",
-                "Add an item to the table",
-                "Remove from table",
-                "Update an item in the table",
-                "How many different kinds of game are available of each manufacturer?",
-                "What is the average amount of games in stock of a given manufacturer?"]
+                   "Add an item to the table",
+                   "Remove from table",
+                   "Update an item in the table",
+                   "How many different kinds of game are available of each manufacturer?",
+                   "What is the average amount of games in stock of a given manufacturer?"]
 
         ui.print_menu("Accounting menu", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -105,23 +105,27 @@ def update(table, id_):
 # the question: How many different kinds of game are available of each manufacturer?
 # return type: a dictionary with this structure: { [manufacturer] : [count] }
 def get_counts_by_manufacturers(table):
-    my_dict = {}
-    for row in range(len(table)):
+    manufacturer_count = {}
+    for row in table:
         counter = 0
-        for manufacturer in range(len(table)):
-            if table[row][2] == table[manufacturer][2]:
+        manufacture = row[2]
+        for row in table:
+            manufacture_2 = row[2]
+            if manufacture == manufacture_2:
                 counter += 1
-        my_dict.update({table[row][2]: counter})
-    return my_dict
+        manufacturer_count.update({manufacture: counter})
+    return manufacturer_count
 
 
 # the question: What is the average amount of games in stock of a given manufacturer?
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
-    sum = 0
+    sum_of_games = 0
     counter = 0
-    for row in range(len(table)):
-        if table[row][2] == manufacturer:
-            sum += float(table[row][4])
+    for row in table:
+        original_manufacture = row[2]
+        in_stock = float(row[4])
+        if original_manufacture == manufacturer:
+            sum_of_games += in_stock
             counter += 1
-    return sum / counter
+    return sum_of_games / counter
