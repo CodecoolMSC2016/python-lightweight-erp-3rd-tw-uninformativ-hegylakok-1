@@ -46,7 +46,7 @@ def start_module():
             remove(table, id_)
             data_manager.write_table_to_file("tool_manager/tools.csv", table)
         elif option == "4":
-            id_ = ui.get_inputs(["Please enter an id to remove: "], "")
+            id_ = ui.get_inputs(["Please enter an id to update: "], "")
             update(table, id_)
             data_manager.write_table_to_file("tool_manager/tools.csv", table)
         elif option == "5":
