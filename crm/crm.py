@@ -80,15 +80,32 @@ def update(table, id_):
 # return type: string (id) - if there are more than one longest name, return the first of descending alphabetical order
 def get_longest_name_id(table):
 
-    # your code
-
-    pass
+    max = 0
+    my_list = []
+    for row in range(len(table)):
+        if len(table[row][1]) > max:
+            max = len(table[row][1])
+    for row in range(len(table)):
+        if len(table[row][1]) == max:
+            my_list.append(table[row])
+        n = len(my_list)
+        while n > 1:
+            n -= 1
+            for row in range(len(my_list) - 1):
+                if my_list[row][1].lower() > my_list[row + 1][1].lower():
+                    my_list[row], my_list[row + 1] = my_list[row + 1], my_list[row]
+    return my_list[0][0]
 
 
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of string (where string is like email+separator+name, separator=";")
+
+
 def get_subscribed_emails(table):
 
-    # your code
-
-    pass
+    my_list = []
+    for row in range(len(table)):
+        if table[row][3] == "1":
+            string = "%s;%s" % (table[row][2], table[row][1])
+            my_list.append(string)
+    return my_list
