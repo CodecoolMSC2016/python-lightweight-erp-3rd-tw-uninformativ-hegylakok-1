@@ -41,7 +41,7 @@ def start_module():
             show_table(table)
         elif option == "2":
             add(table)
-            data_manager.write_table_to_file("accounting/items.csv", table)
+            data_manager.write_table_to_file("store/games.csv", table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an id to remove: "], "")
             remove(table, id_)
